@@ -1,8 +1,13 @@
+import Home from "./pages/Home";
+import { BrowserRouter } from "react-router-dom";
+import Router from "./Router";
 
 function App() {
   return (
-    <div className="container" >
-      Gather client
+    <div>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </div>
   );
 }
