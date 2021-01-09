@@ -1,0 +1,150 @@
+/* @extend display-flex;
+display-flex {
+  display: flex;
+  display: -webkit-flex;
+}
+a:focus,
+a:active {
+  text-decoration: none;
+  outline: none;
+  transition: all 300ms ease 0s;
+  -moz-transition: all 300ms ease 0s;
+  -webkit-transition: all 300ms ease 0s;
+  -o-transition: all 300ms ease 0s;
+  -ms-transition: all 300ms ease 0s;
+}
+
+input,
+select, {
+  outline: none;
+  appearance: unset !important;
+  -moz-appearance: unset !important;
+  -webkit-appearance: unset !important;
+  -o-appearance: unset !important;
+  -ms-appearance: unset !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none !important;
+  -moz-appearance: none !important;
+  -webkit-appearance: none !important;
+  -o-appearance: none !important;
+  -ms-appearance: none !important;
+  margin: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -o-box-shadow: none !important;
+  -ms-box-shadow: none !important;
+}
+
+
+p {
+  margin-bottom: 0px;
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0 30px white inset;
+  -moz-box-shadow: 0 0 0 30px white inset;
+  -webkit-box-shadow: 0 0 0 30px white inset;
+  -o-box-shadow: 0 0 0 30px white inset;
+  -ms-box-shadow: 0 0 0 30px white inset;
+}
+
+
+
+h2 {
+  line-height: 1.8;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #222;
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-weight: bold;
+  color: #222;
+  font-size: 15px;
+  margin: 0px;
+  margin-bottom: 35px;
+}
+
+
+
+.main {
+  padding: 60px 0;
+  position: relative;
+}
+
+
+
+.appointment-form {
+  padding: 50px 60px 70px 60px;
+}
+
+input,
+select {
+
+  width: 100%;
+  display: block;
+  border: 1px solid #56c5f8;
+;
+  border-radius:2px;
+  border-bottom: 2px solid #56c5f8;
+  padding: 5px;
+  color: #222;
+  margin-bottom: 31px;
+  transition: all .2s ease-in;
+}
+input:focus,
+select:focus {
+  color: #222;
+  border-bottom: 2px solid #038bca;
+}
+
+
+
+.form-check {
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .container {
+    width: calc(100% - 30px);
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .appointment-form {
+    padding: 50px 30px 70px 30px;
+  }
+}
+
+body {
+  background-color: white;
+} */
+
+
+
+.signup {
+  width:100%;
+  max-width:330px;
+  padding:15px;
+  margin:auto;
+  height:100px;
+}
