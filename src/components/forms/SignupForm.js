@@ -5,23 +5,51 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // import { GoogleLoginButton } from "react-social-login-buttons";
 
 const SignupForm = ({ state, setState }) => {
+  // Dynamic onChange handler
+  // used by all inputs
+  const handleChange = (name) => (e) => {
+    setState({
+      ...state,
+      [name]: e.target.value,
+      error: "",
+    });
+  };
+
+  const { name, email, password, error } = state;
   return (
+    <>
+
     <Form className={styles.signup}>
       <FormGroup>
         <Label> Name </Label>
-        <Input type="text" placeholder="Name" />
+        <Input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={handleChange("name")}
+          />
       </FormGroup>
       <FormGroup>
         <Label> Email </Label>
-        <Input type="email" placeholder="Email" />
+        <Input
+          type="email"
+          value={email}
+          placeholder="Email"
+          onChange={handleChange("email")}
+          />
       </FormGroup>
       <FormGroup>
         <Label> Password </Label>
-        <Input type="password" placeholder="Password" />
+        <Input
+          type="password"
+          value={password}
+          placeholder="Password"
+          onChange={handleChange("password")}
+          />
       </FormGroup>
-      <Button className="btn-lg btn-dark btn-block mt-3">Submit</Button>
+      <Button className="btn-lg btn-dark btn-block mt-3">Signup</Button>
     </Form>
-
+      </>
 
     // Alternative  form
 
