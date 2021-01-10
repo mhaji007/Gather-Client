@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./SigninForm.module.css";
 import axios from "axios";
-
+import {authenticate} from "../helpers/auth";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // import { GoogleLoginButton } from "react-social-login-buttons";
 
@@ -17,37 +17,25 @@ const SigninForm = ({ state, setState }) => {
     });
   };
 
-  const { email, password, error, redirectToReferer } = state;
+  const { email, password, error, buttonText, redirectToReferer } = state;
 
-  // Function reponsible for making request to sign up endpoint
+  // Function reponsible for making request to sign in endpoint
 
   const signin = async () => {
-    // Using fetch
-
-    //   fetch(`${process.env.REACT_APP_API}/signup`,{
-    //   method:"POST",
-    //   headers: {
-    //     Accept:"application/json",
-    //     Content-Type:"application/json",
-    //   },
-    //   body: JSON.stringify({name,email,password})
-    // })
-    // .then(response => {
-    //   return response.json()
-    // })
-
-    // Using axios with async await
     try {
       const response = await axios.post(`${process.env.REACT_APP_API}/signin`, {
         email,
         password,
       });
-      setState({
-        ...state,
-        email: "",
-        password: "",
-        buttonText: "Signed in",
-        success: response.data.message,
+      authenticate(response, () => {
+        setState({
+          ...state,
+          email: "",
+          password: "",
+          buttonText: "Signed in",
+          success: response.data.message,
+          redirectToReferer:true
+        });
       });
     } catch (error) {
       console.log(error);
@@ -87,7 +75,7 @@ const SigninForm = ({ state, setState }) => {
             onChange={handleChange("password")}
           />
         </FormGroup>
-        <Button className="btn-lg btn-dark btn-block mt-5">Sign in</Button>
+        <Button className="btn-lg btn-dark btn-block mt-5">{buttonText}</Button>
       </Form>
     </>
   );

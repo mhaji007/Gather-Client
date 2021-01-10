@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {Redirect} from "react-router-dom"
 import SigninForm from "../../components/forms/SigninForm";
 import {
   showSuccessMessage,
@@ -12,10 +13,14 @@ function SignIn() {
     error: "",
     success: "",
     buttonText: "SignIn",
-    redirectToReferer: "false"
+    redirectToReferer: false
   });
 
-  const { email, password, error, success } = state;
+  const { email, password, error, success, redirectToReferer } = state;
+
+  if (redirectToReferer) {
+    return <Redirect to="/"/>
+  }
 
   return (
     <div className="container">

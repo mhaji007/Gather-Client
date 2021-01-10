@@ -17,7 +17,7 @@ const SignupForm = ({ state, setState }) => {
     });
   };
 
-  const { name, email, password, error } = state;
+  const { name, email, password, error, buttonText } = state;
 
   // Function reponsible for making request to sign up endpoint
 
@@ -97,7 +97,7 @@ const SignupForm = ({ state, setState }) => {
             onChange={handleChange("password")}
           />
         </FormGroup>
-        <Button className="btn-lg btn-dark btn-block mt-5">Sign up</Button>
+        <Button className="btn-lg btn-dark btn-block mt-5">{buttonText}</Button>
       </Form>
     </>
   );
