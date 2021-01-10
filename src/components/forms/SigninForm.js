@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "./SignupForm.module.css";
+import styles from "./SigninForm.module.css";
 import axios from "axios";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // import { GoogleLoginButton } from "react-social-login-buttons";
 
-const SignupForm = ({ state, setState }) => {
+const SigninForm = ({ state, setState }) => {
   // Dynamic onChange handler
   // used by all inputs
   const handleChange = (name) => (e) => {
@@ -17,11 +17,11 @@ const SignupForm = ({ state, setState }) => {
     });
   };
 
-  const { name, email, password, error } = state;
+  const { email, password, error, redirectToReferer } = state;
 
   // Function reponsible for making request to sign up endpoint
 
-  const signup = async () => {
+  const signin = async () => {
     // Using fetch
 
     //   fetch(`${process.env.REACT_APP_API}/signup`,{
@@ -38,24 +38,22 @@ const SignupForm = ({ state, setState }) => {
 
     // Using axios with async await
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API}/signup`, {
-        name,
+      const response = await axios.post(`${process.env.REACT_APP_API}/signin`, {
         email,
         password,
       });
       setState({
         ...state,
-        name: "",
         email: "",
         password: "",
-        buttonText: "Signed up",
+        buttonText: "Signed in",
         success: response.data.message,
       });
     } catch (error) {
       console.log(error);
       setState({
         ...state,
-        buttonText: "Signup",
+        buttonText: "Sign in",
         error: error.response.data.error,
       });
     }
@@ -63,22 +61,14 @@ const SignupForm = ({ state, setState }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setState({ ...state, buttonText: "Signing up..." });
-    signup();
+    setState({ ...state, buttonText: "Signing in..." });
+    signin();
+
   };
 
   return (
     <>
-      <Form className={styles.signup} onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label> Name </Label>
-          <Input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={handleChange("name")}
-          />
-        </FormGroup>
+      <Form className={styles.signin} onSubmit={handleSubmit}>
         <FormGroup>
           <Label> Email </Label>
           <Input
@@ -97,10 +87,10 @@ const SignupForm = ({ state, setState }) => {
             onChange={handleChange("password")}
           />
         </FormGroup>
-        <Button className="btn-lg btn-dark btn-block mt-5">Sign up</Button>
+        <Button className="btn-lg btn-dark btn-block mt-5">Sign in</Button>
       </Form>
     </>
   );
 };
 
-export default SignupForm;
+export default SigninForm;
