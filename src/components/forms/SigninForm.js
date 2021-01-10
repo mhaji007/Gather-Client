@@ -17,7 +17,7 @@ const SigninForm = ({ state, setState }) => {
     });
   };
 
-  const { email, password, error, buttonText, redirectToReferer } = state;
+  const { email, password, error, buttonText, loading, redirectToReferer } = state;
 
   // Function reponsible for making request to sign in endpoint
 
@@ -34,6 +34,7 @@ const SigninForm = ({ state, setState }) => {
           password: "",
           buttonText: "Signed in",
           success: response.data.message,
+          loading:false,
           redirectToReferer:true
         });
       });
@@ -43,14 +44,16 @@ const SigninForm = ({ state, setState }) => {
         ...state,
         buttonText: "Sign in",
         error: error.response.data.error,
+        loading:false
       });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setState({ ...state, buttonText: "Signing in..." });
+    setState({ ...state, loading:true, buttonText: "Signing in..." });
     signin();
+
 
   };
 

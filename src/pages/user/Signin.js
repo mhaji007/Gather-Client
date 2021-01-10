@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {Redirect} from "react-router-dom"
+import { Redirect } from "react-router-dom";
 import SigninForm from "../../components/forms/SigninForm";
 import {
   showSuccessMessage,
   showErrorMessage,
 } from "../../components/helpers/alerts";
-
+import loader from "../../loader.gif"
 function SignIn() {
   const [state, setState] = useState({
     email: "",
@@ -13,13 +13,14 @@ function SignIn() {
     error: "",
     success: "",
     buttonText: "SignIn",
-    redirectToReferer: false
+    loading: false,
+    redirectToReferer: false,
   });
 
-  const { email, password, error, success, redirectToReferer } = state;
+  const { email, password, error, success, loading, redirectToReferer } = state;
 
   if (redirectToReferer) {
-    return <Redirect to="/"/>
+    return <Redirect to="/" />;
   }
 
   return (
@@ -28,8 +29,11 @@ function SignIn() {
         <img src="./gather.png" />
       </h2>
       {success && showSuccessMessage(success)}
-
       {error && showErrorMessage(error)}
+      <div className="text-center">
+
+      {loading &&<img src={loader} style={{width:"auto", height:"250px"}}/>}
+      </div>
       <SigninForm state={state} setState={setState} />
     </div>
   );
