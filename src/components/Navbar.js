@@ -13,7 +13,7 @@ const isActive = (history, path) => {
 function Navbar({ history }) {
   return (
     <div
-      className={`navbar navbar-expand-lg navbar-light bg-white justify-content-between`}
+    className={`navbar navbar-expand-lg navbar-light bg-white justify-content-between`}
     >
       <Link class="navbar-brand" to="/">
         <img src="./logo.png" width="100" height="auto" alt="Gather logo" />
@@ -24,7 +24,7 @@ function Navbar({ history }) {
           <>
             <li className="nav-item">
               <Link
-                className={`nav-link bg-light ${isActive(
+                className={`nav-link ${isActive(
                   history,
                   "/signin"
                 )} rounded ml-1`}
@@ -35,7 +35,7 @@ function Navbar({ history }) {
             </li>
             <li className="nav-item">
               <Link
-                className={`nav-link bg-light ${isActive(
+                className={`nav-link ${isActive(
                   history,
                   "/signup"
                 )} rounded ml-1`}
@@ -47,18 +47,24 @@ function Navbar({ history }) {
           </>
         )}
         {isAuth() && (
+          <>
           <li className="nav-item">
             <a
-              className={`nav-link bg-light ${isActive(
-                history,
-                "/signout"
-              )} rounded ml-1`}
+              className={`nav-link btn btn-danger rounded ml-1 text-white`}
               onClick={() => signout(() => history.push("/"))}
               style={{ cursor: "pointer" }}
             >
               Sign out
             </a>
           </li>
+          <li className="nav-item">
+            <a
+              className="nav-link border border-primary rounded ml-1 text-primary"
+            >
+              {isAuth().data.user.name}
+            </a>
+          </li>
+          </>
         )}
       </ul>
     </div>
