@@ -20,6 +20,7 @@ function Signup() {
         <img src="./gather.png" />
       </h2>
       {success && showSuccessMessage(success)}
+  
       {error && showErrorMessage(error)}
       <SignupForm state={state} setState={setState} />
     </div>

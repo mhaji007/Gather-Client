@@ -11,35 +11,30 @@ const SignupForm = ({ state, setState }) => {
   const handleChange = (name) => (e) => {
     setState({
       ...state,
-      error:"",
-      success:"",
+      error: "",
+      success: "",
       [name]: e.target.value,
     });
   };
 
   const { name, email, password, error } = state;
 
+  // Function reponsible for making request to sign up endpoint
 
-
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setState({ ...state, buttonText: "Signing up..." });
-
+  const signup = async () => {
     // Using fetch
 
-  //   fetch(`${process.env.REACT_APP_API}/signup`,{
-  //   method:"POST",
-  //   headers: {
-  //     Accept:"application/json",
-  //     Content-Type:"application/json",
-  //   },
-  //   body: JSON.stringify({name,email,password})
-  // })
-  // .then(response => {
-  //   return response.json()
-  // })
+    //   fetch(`${process.env.REACT_APP_API}/signup`,{
+    //   method:"POST",
+    //   headers: {
+    //     Accept:"application/json",
+    //     Content-Type:"application/json",
+    //   },
+    //   body: JSON.stringify({name,email,password})
+    // })
+    // .then(response => {
+    //   return response.json()
+    // })
 
     // Using axios with async await
     try {
@@ -64,6 +59,12 @@ const SignupForm = ({ state, setState }) => {
         error: error.response.data.error,
       });
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setState({ ...state, buttonText: "Signing up..." });
+    signup();
   };
 
   return (
@@ -99,40 +100,6 @@ const SignupForm = ({ state, setState }) => {
         <Button className="btn-lg btn-dark btn-block mt-5">Signup</Button>
       </Form>
     </>
-
-    // Alternative  form
-
-    // <div className="container text-center">
-    // <form>
-    //   <div className="form-group">
-    //     <input
-    //       type="text"
-    //       name="name"
-    //       placeholder="Name"
-    //       required
-    //     />
-    //   </div>
-    //   <div className="form-group">
-    //     <input
-    //       type="email"
-    //       name="email"
-    //       placeholder="Email"
-    //       required
-    //       />
-    //   </div>
-    //   <div className="form-group">
-    //     <input
-    //       type="password"
-    //       name="password"
-    //       placeholder="Password"
-    //       required
-    //     />
-    //   </div>
-
-    //   <button className="btn btn-md btn-raised btn-info ">Submit</button>
-    // </form>
-
-    // </div>
   );
 };
 
