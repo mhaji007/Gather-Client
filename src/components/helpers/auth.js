@@ -29,7 +29,13 @@ export const signout = async (next) => {
 };
 
 // Function for authenticating user
+
 // Access user info from local storage
+// This information can be used for different purposes
+// such as displaying user's profile name (via isAuth().data.user.name)
+// as well as directing user to their profile page after
+// sign in (the user id is accessible via isAuth().data.user._id
+// and can be used to push to the url once user clicks on their profile name)
 export const isAuth = () => {
   if(typeof window =="undefined") {
     return false
