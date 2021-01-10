@@ -78,7 +78,7 @@ const SigninForm = ({ state, setState }) => {
             onChange={handleChange("password")}
           />
         </FormGroup>
-        <Button className="btn-lg btn-dark btn-block mt-5">{buttonText}</Button>
+        <Button className="btn-lg btn-dark btn-block mt-3">{buttonText}</Button>
       </Form>
     </>
   );

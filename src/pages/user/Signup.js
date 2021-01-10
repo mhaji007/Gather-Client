@@ -9,18 +9,18 @@ function Signup() {
     password:"",
     error:"",
     success:"",
-    buttonText:"Signup"
+    buttonText:"Sign up"
   })
 
   const {name, email, password, error, success} = state;
 
   return (
     <div className="container">
-      <h2 className="mt-5 mb-3 text-center">
+      <h2 className="mt-5 mb-1 text-center">
         <img src="./gather.png" />
       </h2>
       {success && showSuccessMessage(success)}
-  
+
       {error && showErrorMessage(error)}
       <SignupForm state={state} setState={setState} />
     </div>
