@@ -33,7 +33,9 @@ function Users() {
             <CardImg
               top
               width="100%"
-              src="/assets/318x180.svg"
+              height="300vw"
+              objectFit="cover"
+              src="./avatar.png"
               alt="Card image cap"
             />
             <CardBody>
@@ -44,7 +46,7 @@ function Users() {
               <CardText>
                {user.email}
               </CardText>
-              <btn className="btn btn-sm border border-dark rounded ml-1 text-dark">
+              <btn className="btn btn-sm border border-dark rounded text-dark">
                 View Profile
               </btn>
             </CardBody>
