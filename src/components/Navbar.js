@@ -16,7 +16,7 @@ function Navbar({ history }) {
       className={`navbar navbar-expand-lg navbar-light bg-white justify-content-between`}
     >
       <Link className="navbar-brand" to="/">
-        <img src="./logo.PNG" width="100" height="auto" alt="Gather logo" />
+        <img src="/logo.PNG" width="100" height="auto" alt="Gather logo" />
       </Link>
 
       <ul className="nav">

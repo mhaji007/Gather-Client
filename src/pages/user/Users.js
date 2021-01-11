@@ -7,6 +7,7 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
+import {Link} from "react-router-dom"
 import axios from "axios";
 
 function Users() {
@@ -46,9 +47,9 @@ function Users() {
               <CardText>
                {user.email}
               </CardText>
-              <btn className="btn btn-sm border border-dark rounded text-dark">
+              <Link to={`/user/${user._id}`} className="btn btn-sm border border-dark rounded text-dark">
                 View Profile
-              </btn>
+              </Link>
             </CardBody>
           </Card>
         ))}
