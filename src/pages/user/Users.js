@@ -4,6 +4,7 @@ import axios from "axios";
 function Users() {
   const [users, setUsers] = useState([]);
 
+
   const listUsers = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API}/users`);
@@ -19,7 +20,13 @@ function Users() {
 
   return (
     <div className="container">
-      <h2 className="mt-5 mb-5">{JSON.stringify(users)}</h2>
+      <h2 className="mt-5 mb-5">
+        {users.map((user, i) => (
+          <div key={i}>
+            <p>{user.name}</p>
+          </div>
+        ))}
+      </h2>
     </div>
   );
 }
