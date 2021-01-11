@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from "react-router-dom";
 import SignupForm from "../../components/forms/SignupForm";
 import { showSuccessMessage, showErrorMessage } from "../../components/helpers/alerts";
+import styles from "../../components/helpers/alerts.module.css"
 
 function Signup() {
   const [state, setState] = useState({
@@ -20,6 +22,13 @@ function Signup() {
         <img src="./gather.png" />
       </h2>
       {success && showSuccessMessage(success)}
+      {success && (
+        <div className="text-center">
+        <Link className={`text-success btn bg-white btn-success mt-1 ${styles.cstmAlert}`} to="/signin">
+          Click here to sign in
+        </Link>
+        </div>
+      )}
 
       {error && showErrorMessage(error)}
       <SignupForm state={state} setState={setState} />
