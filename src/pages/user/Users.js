@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+} from "reactstrap";
 import axios from "axios";
 
 function Users() {
   const [users, setUsers] = useState([]);
-
 
   const listUsers = async () => {
     try {
@@ -20,13 +27,30 @@ function Users() {
 
   return (
     <div className="container">
-      <h2 className="mt-5 mb-5">
+      <div className="row">
         {users.map((user, i) => (
-          <div key={i}>
-            <p>{user.name}</p>
-          </div>
+          <Card key={i} className="col-md-4 ml-2">
+            <CardImg
+              top
+              width="100%"
+              src="/assets/318x180.svg"
+              alt="Card image cap"
+            />
+            <CardBody>
+              <CardTitle tag="h5">{user.name}</CardTitle>
+              {/* <CardSubtitle tag="h6" className="mb-2 text-muted">
+                Card subtitle
+              </CardSubtitle> */}
+              <CardText>
+               {user.email}
+              </CardText>
+              <btn className="btn btn-sm border border-dark rounded ml-1 text-dark">
+                View Profile
+              </btn>
+            </CardBody>
+          </Card>
         ))}
-      </h2>
+      </div>
     </div>
   );
 }
