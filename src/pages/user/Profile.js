@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { isAuth } from "../../components/helpers/auth";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 function Profile({ match: { params } }) {
   const [state, setState] = useState({
@@ -38,6 +38,9 @@ function Profile({ match: { params } }) {
     <Redirect to="/signin" />
   ) : (
     <div className="container">
+      <div className="row">
+
+      <div className="col-md-6">
       <h2 className="mt-5 mb-5">Profile</h2>
       {/*
       Once use signs out, the info from localStorage is deleted so
@@ -50,6 +53,21 @@ function Profile({ match: { params } }) {
       <p>Hello {isAuth() && isAuth().data.user.name}</p>
       <p>Email: {isAuth() && isAuth().data.user.email}</p>
       <p>{user && `Joined ${new Date(user.created).toDateString()}`}</p>
+
+      </div>
+      <div className="col-md-6">
+          {isAuth() && isAuth().data.user && isAuth().data.user._id == user._id && (
+            <div className="d-inline-block mt-5">
+                <Link className="btn btn-raised btn-success mr-5" to={`/user/edit/${user._id}`}>
+                  Edit Profile
+                </Link>
+                <Link className="btn btn-raised btn-danger ">
+                  Delete Profile
+                </Link>
+            </div>
+          )}
+      </div>
+      </div>
     </div>
   );
 }
