@@ -1,5 +1,11 @@
-import React, {useState, useEffect} from 'react'
-import axios from "axios"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, Redirect } from "react-router-dom";
+import EditProfileForm from "../../components/forms/EditProfileForm";
+import {
+  showSuccessMessage,
+  showErrorMessage,
+} from "../../components/helpers/alerts";
 import { isAuth } from "../../components/helpers/auth";
 
 function EditProfile({ match: { params } }) {
@@ -8,7 +14,22 @@ function EditProfile({ match: { params } }) {
     name: "",
     email: "",
     password: "",
+    error: "",
+    success: "",
+    redirectToProfile: false,
+    buttonText: "Update",
   });
+
+  const {
+    id,
+    name,
+    email,
+    password,
+    error,
+    success,
+    redirectToProfile,
+    buttonText,
+  } = state;
 
   const getUser = async () => {
     try {
@@ -21,9 +42,11 @@ function EditProfile({ match: { params } }) {
         }
       );
       setState({
+        ...state,
         id: response.data._id,
         name: response.data.name,
         email: response.data.email,
+
       });
     } catch (error) {
       console.log("error from profile", error);
@@ -38,11 +61,16 @@ function EditProfile({ match: { params } }) {
     getUser();
   }, [params.userId]);
 
-  return (
+  return redirectToProfile ? (
+    <Redirect to={`/user/${id}`} />
+  ) : (
     <div className="container">
-      <h2 className="mt-5 mb-5">Edit Profile</h2>
+      <h2 className="mt-5 mb-5 text-center">Edit Profile</h2>
+      {success && showSuccessMessage(success)}
+      {error && showErrorMessage(error)}
+      <EditProfileForm state={state} setState={setState} />
     </div>
   );
 }
 
-export default EditProfile
+export default EditProfile;

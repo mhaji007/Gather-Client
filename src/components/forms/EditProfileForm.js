@@ -1,11 +1,12 @@
 import React from "react";
-import styles from "./SignupForm.module.css";
+import styles from "./EditProfileForm.module.css";
+import { isAuth, signout } from "../../components/helpers/auth";
 import axios from "axios";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // import { GoogleLoginButton } from "react-social-login-buttons";
 
-const SignupForm = ({ state, setState }) => {
+const EditProfileForm = ({ state, setState }) => {
   // Dynamic onChange handler
   // used by all inputs
   const handleChange = (name) => (e) => {
@@ -17,59 +18,66 @@ const SignupForm = ({ state, setState }) => {
     });
   };
 
-  const { name, email, password, success, error, buttonText } = state;
+  const {
+    name,
+    email,
+    password,
+    success,
+    error,
+    buttonText,
+    redirectToProfile,
+    id,
+  } = state;
+
+
 
   // Function reponsible for making request to sign up endpoint
 
-  const signup = async () => {
-    // Using fetch
-
-    //   fetch(`${process.env.REACT_APP_API}/signup`,{
-    //   method:"POST",
-    //   headers: {
-    //     Accept:"application/json",
-    //     Content-Type:"application/json",
-    //   },
-    //   body: JSON.stringify({name,email,password})
-    // })
-    // .then(response => {
-    //   return response.json()
-    // })
-
-    // Using axios with async await
+  const update = async () => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API}/signup`, {
-        name,
-        email,
-        password,
-      });
+      const response = await axios.put(
+        `${process.env.REACT_APP_API}/user/${id}`,
+        {
+          name,
+          email,
+          // In case user does not want to
+          // update their password
+          password: password || undefined,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${isAuth().data.token}`,
+          },
+        }
+      );
       setState({
         ...state,
         name: "",
         email: "",
         password: "",
-        buttonText: "Signed up",
+        buttonText: "Updated",
         success: response.data.message,
+        redirectToProfile: true,
       });
     } catch (error) {
       console.log(error);
       setState({
         ...state,
-        buttonText: "Sign up",
+        buttonText: "Update",
         error: error.response.data.error,
+        // redirectToProfile: true,
       });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setState({ ...state, buttonText: "Signing up..." });
-    signup();
+    update();
   };
 
   return (
     <>
-      <Form className={styles.signup} onSubmit={handleSubmit}>
+      <Form className={styles.update} onSubmit={handleSubmit}>
         <FormGroup>
           <Label> Name </Label>
           <Input
@@ -103,4 +111,4 @@ const SignupForm = ({ state, setState }) => {
   );
 };
 
-export default SignupForm;
+export default EditProfileForm;
