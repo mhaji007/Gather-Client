@@ -55,7 +55,7 @@ const SignupForm = ({ state, setState }) => {
       console.log(error);
       setState({
         ...state,
-        buttonText: "Sig nup",
+        buttonText: "Sign up",
         error: error.response.data.error,
       });
     }

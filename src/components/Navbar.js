@@ -50,7 +50,7 @@ function Navbar({ history }) {
           <>
             <li className="nav-item">
               <a
-                className={`nav-link btn btn-danger rounded ml-1 text-white`}
+                className={`nav-link border border-danger rounded ml-1 text-danger`}
                 onClick={() => signout(() => history.push("/signin"))}
                 style={{ cursor: "pointer" }}
               >

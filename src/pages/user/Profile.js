@@ -1,3 +1,11 @@
+// Profile page for displaying details of a single user.
+// When user lands on this page via clicking on view profile
+// link in users, their userId is already pushed to the url
+// This userId is then retrieved on component mount and whenever
+// there is a change in userId (e.g., user clicking on their own profile)
+// via props.match.params. match.params is made available by default
+// for any route component
+
 import React, { useState, useEffect } from "react";
 import {
   Card,
@@ -17,7 +25,13 @@ function Profile({ match: { params } }) {
     redirectToSignin: "",
   });
 
+  const [deletestate, setDeleteState] = useState({
+    error: "",
+    success: "",
+  });
+
   const { user, redirectToSignin } = state;
+  const { error, success } = deletestate;
 
   const getUser = async () => {
     try {
@@ -37,10 +51,39 @@ function Profile({ match: { params } }) {
       setState({ redirectToSignin: true });
     }
   };
-
+ // Retrieve user info on component mount
+ // and on userId change
   useEffect(() => {
     getUser();
-  }, []);
+  }, [params.userId]);
+
+  const handleDelete = (userId) => async (e) => {
+    if (window) {
+      const alert = window.alert("Delete profile?");
+    }
+    if (alert) {
+      try {
+        const response = await axios.delete(
+          `${process.env.REACT_APP_API}/user/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${isAuth().data.token}`,
+            },
+          }
+        );
+        setDeleteState({
+          error: "",
+          success: response.data.message,
+        });
+      } catch (error) {
+        console.log(error);
+        setDeleteState({
+          ...state,
+          error: error.response.data.error,
+        });
+      }
+    }
+  };
 
   return redirectToSignin ? (
     <Redirect to="/signin" />
@@ -58,7 +101,8 @@ function Profile({ match: { params } }) {
               alt="Card image cap"
             />
           </Card>
-          {/*
+        </div>
+        {/*
       Once use signs out, the info from localStorage is deleted so
       isAuth() returns nothing and app throws an error.
       We can either avoid isAuth altogether and just use properties
@@ -66,17 +110,16 @@ function Profile({ match: { params } }) {
       access the user like below:
       isAuth() && isAuth().name
       */}
-          {/* <p>Hello {isAuth() && isAuth().data.user.name}</p>
+        {/* <p>Hello {isAuth() && isAuth().data.user.name}</p>
       <p>Email: {isAuth() && isAuth().data.user.email}</p> */}
-          {/* Note: if the above two lines are used on clicking view
+        {/* Note: if the above two lines are used on clicking view
       profile when navigating from users page, we end up with the same
       name and email as isAuth mehtod pulls the information from local storage
       while what we need in fact is name and email stored in the state on
       component mounting
        */}
-        </div>
         <div className="col-md-6 lead">
-          <p>Hello {user.name}</p>
+          <p>Name: {user.name}</p>
           <p>Email: {user.email}</p>
           <p>{user && `Joined ${new Date(user.created).toDateString()}`}</p>
           {/* Conditionally display the edit and delete profile buttons.
@@ -88,12 +131,15 @@ function Profile({ match: { params } }) {
             isAuth().data.user._id == user._id && (
               <div className="d-inline-block">
                 <Link
-                  className="btn btn-raised btn-success mr-5"
+                  className="btn btn-sm btn-success mr-5"
                   to={`/user/edit/${user._id}`}
                 >
                   Edit Profile
                 </Link>
-                <Link className="btn btn-raised btn-danger ">
+                <Link
+                  className="btn btn-sm btn-raised btn-danger"
+                  onClick={handleDelete(user._id)}
+                >
                   Delete Profile
                 </Link>
               </div>
