@@ -7,6 +7,7 @@ import Profile from "./pages/user/Profile";
 import Navbar from "./components/Navbar";
 import Users from "./pages/user/Users";
 import EditProfile from "./pages/user/EditProfile";
+import PrivateRoute from "./components/helpers/auth";
 
 const Router = () => {
   return (
@@ -16,8 +17,8 @@ const Router = () => {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/signin" component={Signin}></Route>
-        <Route exact path="/user/:userId" component={Profile}></Route>
-        <Route exact path="/user/edit/:userId" component={EditProfile}></Route>
+        <PrivateRoute exact path="/user/:userId" component={Profile}></PrivateRoute>
+        <PrivateRoute exact path="/user/edit/:userId" component={EditProfile}></PrivateRoute>
         <Route exact path="/users" component={Users}></Route>
       </Switch>
     </div>
