@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 // response is an object contianing token
 // and user info received when user successfully signs in
 // The callback function (next) is used for
@@ -37,8 +36,8 @@ export const signout = async (next) => {
 // sign in (the user id is accessible via isAuth().data.user._id
 // and can be used to push to the url once user clicks on their profile name)
 export const isAuth = () => {
-  if(typeof window =="undefined") {
-    return false
+  if (typeof window == "undefined") {
+    return false;
   }
   if (localStorage.getItem("jwt")) {
     return JSON.parse(localStorage.getItem("jwt"));
@@ -47,3 +46,4 @@ export const isAuth = () => {
     return false;
   }
 };
+

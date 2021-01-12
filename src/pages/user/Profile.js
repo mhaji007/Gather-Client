@@ -15,7 +15,8 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
-import { isAuth } from "../../components/helpers/auth";
+
+import { isAuth, signout } from "../../components/helpers/auth";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 
@@ -28,10 +29,11 @@ function Profile({ match: { params } }) {
   const [deletestate, setDeleteState] = useState({
     error: "",
     success: "",
+    redirect:false
   });
 
   const { user, redirectToSignin } = state;
-  const { error, success } = deletestate;
+  const { error, success, redirect } = deletestate;
 
   const getUser = async () => {
     try {
@@ -46,7 +48,7 @@ function Profile({ match: { params } }) {
       setState({ user: response.data });
     } catch (error) {
       console.log("error from profile", error);
-      // User tryong to access this
+      // User trying to access this
       // resource is not authenticated
       setState({ redirectToSignin: true });
     }
@@ -59,7 +61,7 @@ function Profile({ match: { params } }) {
 
   const handleDelete = (userId) => async (e) => {
     if (window) {
-      const alert = window.alert("Delete profile?");
+      const alert = window.confirm("Delete profile?");
     }
     if (alert) {
       try {
@@ -71,6 +73,9 @@ function Profile({ match: { params } }) {
             },
           }
         );
+
+          signout (() => console.log("User was successfully deleted"));
+          setDeleteState({...state, redirect:true})
         setDeleteState({
           error: "",
           success: response.data.message,
@@ -87,6 +92,8 @@ function Profile({ match: { params } }) {
 
   return redirectToSignin ? (
     <Redirect to="/signin" />
+  ) : redirect ? (
+    <Redirect to="/" />
   ) : (
     <div className="container">
       <h2 className="mt-5 mb-5">Profile</h2>
@@ -128,7 +135,7 @@ function Profile({ match: { params } }) {
         If yes, only then display the edit and delete buttons*/}
           {isAuth() &&
             isAuth().data.user &&
-            isAuth().data.user._id == user._id && (
+            isAuth().data.user._id === user._id && (
               <div className="d-inline-block">
                 <Link
                   className="btn btn-sm btn-success mr-5"
