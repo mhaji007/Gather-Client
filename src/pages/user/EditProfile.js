@@ -6,6 +6,7 @@ import {
   showSuccessMessage,
   showErrorMessage,
 } from "../../components/helpers/alerts";
+import loader from "../../loader.gif";
 import { isAuth } from "../../components/helpers/auth";
 
 function EditProfile({ match: { params } }) {
@@ -16,6 +17,7 @@ function EditProfile({ match: { params } }) {
     password: "",
     error: "",
     success: "",
+    loading:false,
     formData: new FormData(),
     imageUploadText: "Upload Photo",
     redirectToProfile: false,
@@ -29,6 +31,7 @@ function EditProfile({ match: { params } }) {
     password,
     error,
     success,
+    loading,
     formData,
     redirectToProfile,
     buttonText,
@@ -71,6 +74,11 @@ function EditProfile({ match: { params } }) {
       <h2 className="mt-5 mb-5 text-center">Edit Profile</h2>
       {success && showSuccessMessage(success)}
       {error && showErrorMessage(error)}
+      <div className="text-center">
+        {loading && (
+          <img src={loader} style={{ width: "auto", height: "250px" }} />
+        )}
+      </div>
       <EditProfileForm state={state} setState={setState} />
     </div>
   );

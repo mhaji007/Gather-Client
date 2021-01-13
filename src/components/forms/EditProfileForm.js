@@ -13,6 +13,7 @@ const EditProfileForm = ({ state, setState }) => {
     password,
     success,
     error,
+    loading,
     formData,
     buttonText,
     redirectToProfile,
@@ -51,8 +52,9 @@ const EditProfileForm = ({ state, setState }) => {
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API}/user/${id}`,
-        {
+        { // If submitting form data
           formData,
+          // If submitting only json data
           // name,
           // email,
           // // In case user does not want to
@@ -72,6 +74,7 @@ const EditProfileForm = ({ state, setState }) => {
         password: "",
         buttonText: "Updated",
         success: response.data.message,
+        loading:false,
         redirectToProfile: true,
       });
     } catch (error) {
@@ -80,6 +83,7 @@ const EditProfileForm = ({ state, setState }) => {
         ...state,
         buttonText: "Update",
         error: error.response.data.error,
+        loading:false
         // redirectToProfile: true,
       });
     }
@@ -87,6 +91,7 @@ const EditProfileForm = ({ state, setState }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setState({...state, loading:true})
     console.log(...formData)
     update();
   };
