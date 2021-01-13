@@ -16,6 +16,8 @@ function EditProfile({ match: { params } }) {
     password: "",
     error: "",
     success: "",
+    formData: new FormData(),
+    imageUploadText: "Upload Photo",
     redirectToProfile: false,
     buttonText: "Update",
   });
@@ -27,6 +29,7 @@ function EditProfile({ match: { params } }) {
     password,
     error,
     success,
+    formData,
     redirectToProfile,
     buttonText,
   } = state;

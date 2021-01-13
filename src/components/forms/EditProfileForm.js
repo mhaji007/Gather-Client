@@ -7,42 +7,57 @@ import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // import { GoogleLoginButton } from "react-social-login-buttons";
 
 const EditProfileForm = ({ state, setState }) => {
-  // Dynamic onChange handler
-  // used by all inputs
-  const handleChange = (name) => (e) => {
-    setState({
-      ...state,
-      error: "",
-      success: "",
-      [name]: e.target.value,
-    });
-  };
-
   const {
     name,
     email,
     password,
     success,
     error,
+    formData,
     buttonText,
     redirectToProfile,
     id,
   } = state;
+  // Dynamic onChange handler
+  // used by all inputs
+  const handleChange = (name) => (e) => {
+    const value = name === "photo" ? e.target.files[0] : e.target.value;
+    const imageName =
+      name === "photo" ? e.target.files[0].name : "Upload Photo";
 
+    // Set dynamic name and value in formData
+    // have the formData ready to send to backend
+    // on submit
+
+    // if name:email => value of email
+    // if name:photo => value of photo
+    formData.set(name, value);
+
+
+    setState({
+      ...state,
+      [name]: value,
+      error: "",
+      success: "",
+      imageUploadText: imageName,
+    });
+  };
 
 
   // Function reponsible for making request to sign up endpoint
 
   const update = async () => {
+    console.log("User data update ===>",formData)
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API}/user/${id}`,
         {
-          name,
-          email,
-          // In case user does not want to
-          // update their password
-          password: password || undefined,
+          formData,
+          // name,
+          // email,
+          // // In case user does not want to
+          // // update their password
+          // password: password || undefined,
         },
         {
           headers: {
@@ -72,12 +87,21 @@ const EditProfileForm = ({ state, setState }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(...formData)
     update();
   };
 
   return (
     <>
       <Form className={styles.update} onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label> Profile Photo </Label>
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={handleChange("photo")}
+          />
+        </FormGroup>
         <FormGroup>
           <Label> Name </Label>
           <Input
