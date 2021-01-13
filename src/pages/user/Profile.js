@@ -90,6 +90,17 @@ function Profile({ match: { params } }) {
     }
   };
 
+    const photoUrl = user._id
+      ? // Without ?${new Date().getTime()} when re-uploading an image
+        // (i.e., choosing another image after choosing one image)
+        // results in getting the same old image and therefore
+        // sometimes there is a need for browser refresh for
+        // the new image to appear
+        `${process.env.REACT_APP_API}/user/photo/${
+          user._id
+        }?${new Date().getTime()}`
+      : "/avatar.png";
+
   return redirectToSignin ? (
     <Redirect to="/signin" />
   ) : redirect ? (
@@ -104,7 +115,8 @@ function Profile({ match: { params } }) {
               top
               width="100%"
               objectFit="cover"
-              src="/avatar.png"
+              src={photoUrl}
+              onError={(i) => (i.target.src = "/avatar.png")}
               alt="Card image cap"
             />
           </Card>
