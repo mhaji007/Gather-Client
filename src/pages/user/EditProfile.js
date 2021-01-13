@@ -22,13 +22,14 @@ function EditProfile({ match: { params } }) {
   const [state, setState] = useState({
     id: "",
     name: "",
+    about: "",
     email: "",
     password: "",
     error: "",
     success: "",
-    loading:false,
+    loading: false,
     formData: new FormData(),
-    fileSize:0,
+    fileSize: 0,
     imageUploadText: "Upload Photo",
     redirectToProfile: false,
     buttonText: "Update",
@@ -38,6 +39,7 @@ function EditProfile({ match: { params } }) {
     id,
     name,
     email,
+    about,
     password,
     error,
     success,
@@ -63,7 +65,7 @@ function EditProfile({ match: { params } }) {
         id: response.data._id,
         name: response.data.name,
         email: response.data.email,
-
+        about: response.data.about,
       });
     } catch (error) {
       console.log("error from profile", error);

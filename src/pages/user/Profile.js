@@ -165,6 +165,13 @@ function Profile({ match: { params } }) {
             )}
         </div>
       </div>
+      <div className="row">
+        <div className="col-md-12 mt-5 mb-5">
+          <div className="lead">
+            {user.about}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

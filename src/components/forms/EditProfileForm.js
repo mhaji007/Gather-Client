@@ -10,6 +10,7 @@ const EditProfileForm = ({ state, setState }) => {
   const {
     name,
     email,
+    about,
     password,
     success,
     error,
@@ -95,6 +96,7 @@ const EditProfileForm = ({ state, setState }) => {
         ...state,
         name: "",
         email: "",
+        about: "",
         password: "",
         buttonText: "Updated",
         success: response.data.message,
@@ -141,6 +143,15 @@ const EditProfileForm = ({ state, setState }) => {
             placeholder="Name"
             value={name}
             onChange={handleChange("name")}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label> About </Label>
+          <Input
+            type="textarea"
+            placeholder="About"
+            value={about}
+            onChange={handleChange("about")}
           />
         </FormGroup>
         <FormGroup>
