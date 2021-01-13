@@ -34,7 +34,6 @@ const EditProfileForm = ({ state, setState }) => {
     // if name:photo => value of photo
     formData.set(name, value);
 
-
     setState({
       ...state,
       [name]: value,
@@ -44,29 +43,22 @@ const EditProfileForm = ({ state, setState }) => {
     });
   };
 
-
   // Function reponsible for making request to sign up endpoint
 
   const update = async () => {
-    console.log("User data update ===>",formData)
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API}/user/${id}`,
-        { // If submitting form data
-          formData,
-          // If submitting only json data
-          // name,
-          // email,
-          // // In case user does not want to
-          // // update their password
-          // password: password || undefined,
-        },
+
+        formData,
+
         {
           headers: {
             Authorization: `Bearer ${isAuth().data.token}`,
           },
         }
       );
+      console.log("User update response ====>", response);
       setState({
         ...state,
         name: "",
@@ -74,8 +66,9 @@ const EditProfileForm = ({ state, setState }) => {
         password: "",
         buttonText: "Updated",
         success: response.data.message,
-        loading:false,
+        loading: false,
         redirectToProfile: true,
+        imageUploadText: "Upload Image",
       });
     } catch (error) {
       console.log(error);
@@ -83,16 +76,16 @@ const EditProfileForm = ({ state, setState }) => {
         ...state,
         buttonText: "Update",
         error: error.response.data.error,
-        loading:false
+        loading: false,
         // redirectToProfile: true,
       });
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setState({...state, loading:true})
-    console.log(...formData)
+    setState({ ...state, loading: true });
+    console.log("form data from client =======>", ...formData);
     update();
   };
 
