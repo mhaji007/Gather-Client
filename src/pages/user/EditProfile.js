@@ -19,6 +19,7 @@ function EditProfile({ match: { params } }) {
     success: "",
     loading:false,
     formData: new FormData(),
+    fileSize:0,
     imageUploadText: "Upload Photo",
     redirectToProfile: false,
     buttonText: "Update",
@@ -33,6 +34,7 @@ function EditProfile({ match: { params } }) {
     success,
     loading,
     formData,
+    fileSize,
     redirectToProfile,
     buttonText,
   } = state;

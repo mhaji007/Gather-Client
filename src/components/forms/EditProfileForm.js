@@ -15,14 +15,45 @@ const EditProfileForm = ({ state, setState }) => {
     error,
     loading,
     formData,
+    fileSize,
     buttonText,
     redirectToProfile,
     id,
   } = state;
+
+  // Client side validation of user input
+  // for profile update.
+  const isValid = () => {
+    const { name, email, password } = state;
+
+       if (fileSize>100000) {
+         setState({ ...state, error: "File size should be less than 100kb" });
+         return false;
+       }
+    if (name.length == 0) {
+      setState({ ...state, error: "Name is required" });
+      return false;
+    }
+    // Apply test to email
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      setState({ ...state, error: "A valid email is required" });
+      return false;
+    }
+    if (password.length >= 1 && password.length <= 5) {
+      setState({
+        ...state,
+        error: "Password must be at least 6 characters long",
+      });
+      return false;
+    }
+    return true;
+  };
+
   // Dynamic onChange handler
   // used by all inputs
   const handleChange = (name) => (e) => {
     const value = name === "photo" ? e.target.files[0] : e.target.value;
+    const fileSize = name === "photo" ? e.target.files[0].size : 0;
     const imageName =
       name === "photo" ? e.target.files[0].name : "Upload Photo";
 
@@ -37,6 +68,7 @@ const EditProfileForm = ({ state, setState }) => {
     setState({
       ...state,
       [name]: value,
+      fileSize,
       error: "",
       success: "",
       imageUploadText: imageName,
@@ -86,7 +118,9 @@ const EditProfileForm = ({ state, setState }) => {
     e.preventDefault();
     setState({ ...state, loading: true });
     console.log("form data from client =======>", ...formData);
-    update();
+    if (isValid()) {
+      update();
+    }
   };
 
   return (
