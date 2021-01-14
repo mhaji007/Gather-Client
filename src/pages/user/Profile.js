@@ -17,6 +17,7 @@ import {
 } from "reactstrap";
 
 import { isAuth, signout } from "../../components/helpers/auth";
+import FollowButton from "../../components/user/FollowButton";
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 
@@ -147,7 +148,7 @@ function Profile({ match: { params } }) {
         If yes, only then display the edit and delete buttons*/}
           {isAuth() &&
             isAuth().data.user &&
-            isAuth().data.user._id === user._id && (
+            isAuth().data.user._id === user._id ? (
               <div className="d-inline-block">
                 <Link
                   className="btn btn-sm btn-success mr-5"
@@ -162,7 +163,7 @@ function Profile({ match: { params } }) {
                   Delete Profile
                 </Link>
               </div>
-            )}
+            ):(<FollowButton/>)}
         </div>
       </div>
       <div className="row">
