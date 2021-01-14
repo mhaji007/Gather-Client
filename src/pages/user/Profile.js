@@ -2,9 +2,9 @@
 // When user lands on this page via clicking on view profile
 // link in users, their userId is already pushed to the url
 // This userId is then retrieved on component mount and whenever
-// there is a change in userId (e.g., user clicking on their own profile)
-// via props.match.params. match.params is made available by default
-// for any route component
+// there is a change in userId
+// (e.g., user clicking on their own profile from this page) via props.match.params.
+// match.params is made available by default for any route component
 
 import React, { useState, useEffect } from "react";
 import {
@@ -23,19 +23,22 @@ import { Link, Redirect } from "react-router-dom";
 
 function Profile({ match: { params } }) {
   const [state, setState] = useState({
-    user: "",
+    user: {following:[], followers:[]},
     redirectToSignin: "",
+    following: false,
   });
 
   const [deletestate, setDeleteState] = useState({
     error: "",
     success: "",
-    redirect:false
+    redirect: false,
   });
 
-  const { user, redirectToSignin } = state;
+  const { user, redirectToSignin, following } = state;
   const { error, success, redirect } = deletestate;
 
+  // Function for returning the details of
+  // a given user (when "view profile" is clicked in users page)
   const getUser = async () => {
     try {
       const response = await axios.get(
@@ -46,7 +49,12 @@ function Profile({ match: { params } }) {
           },
         }
       );
-      setState({ user: response.data });
+      // Pass user whose profile we are currently on
+      // to check whether we(logged-in user) are
+      // in his followers
+      let following = checkFollow(response.data);
+      // update the state with user and result of the check
+      setState({ user: response.data, following });
     } catch (error) {
       console.log("error from profile", error);
       // User trying to access this
@@ -54,8 +62,8 @@ function Profile({ match: { params } }) {
       setState({ redirectToSignin: true });
     }
   };
- // Retrieve user info on component mount
- // and on userId change
+  // Retrieve user info on component mount
+  // and on userId change
   useEffect(() => {
     getUser();
   }, [params.userId]);
@@ -75,8 +83,8 @@ function Profile({ match: { params } }) {
           }
         );
 
-          signout (() => console.log("User was successfully deleted"));
-          setDeleteState({...state, redirect:true})
+        signout(() => console.log("User was successfully deleted"));
+        setDeleteState({ ...state, redirect: true });
         setDeleteState({
           error: "",
           success: response.data.message,
@@ -91,16 +99,31 @@ function Profile({ match: { params } }) {
     }
   };
 
-    const photoUrl = user._id
-      ? // Without ?${new Date().getTime()} when re-uploading an image
-        // (i.e., choosing another image after choosing one image)
-        // results in getting the same old image and therefore
-        // sometimes there is a need for browser refresh for
-        // the new image to appear
-        `${process.env.REACT_APP_API}/user/photo/${
-          user._id
-        }?${new Date().getTime()}`
-      : "/avatar.png";
+  const photoUrl = user._id
+    ? // Without ?${new Date().getTime()} when re-uploading an image
+      // (i.e., choosing another image after choosing one image)
+      // results in getting the same old image and therefore
+      // sometimes there is a need for browser refresh for
+      // the new image to appear
+      `${process.env.REACT_APP_API}/user/photo/${
+        user._id
+      }?${new Date().getTime()}`
+    : "/avatar.png";
+
+  // Function to check whether a given user
+  // is followed by the currently logged-in user
+  const checkFollow = (user) => {
+    // get currently logged-in user from local storage
+    // (available on isAuth().data.user)
+    const jwt = isAuth();
+    // Check whether the currently logged-in user
+    // is found in the array of followers of
+    // the user
+    const match = user.followers.find((follower) => {
+      return follower._id === jwt.data.user._id;
+    });
+    return match;
+  };
 
   return redirectToSignin ? (
     <Redirect to="/signin" />
@@ -147,30 +170,30 @@ function Profile({ match: { params } }) {
         is same as user info from state (i.e., user who owns the profile)
         If yes, only then display the edit and delete buttons*/}
           {isAuth() &&
-            isAuth().data.user &&
-            isAuth().data.user._id === user._id ? (
-              <div className="d-inline-block">
-                <Link
-                  className="btn btn-sm btn-success mr-5"
-                  to={`/user/edit/${user._id}`}
-                >
-                  Edit Profile
-                </Link>
-                <Link
-                  className="btn btn-sm btn-raised btn-danger"
-                  onClick={handleDelete(user._id)}
-                >
-                  Delete Profile
-                </Link>
-              </div>
-            ):(<FollowButton/>)}
+          isAuth().data.user &&
+          isAuth().data.user._id === user._id ? (
+            <div className="d-inline-block">
+              <Link
+                className="btn btn-sm btn-success mr-5"
+                to={`/user/edit/${user._id}`}
+              >
+                Edit Profile
+              </Link>
+              <Link
+                className="btn btn-sm btn-raised btn-danger"
+                onClick={handleDelete(user._id)}
+              >
+                Delete Profile
+              </Link>
+            </div>
+          ) : (
+            <FollowButton following={following} />
+          )}
         </div>
       </div>
       <div className="row">
         <div className="col-md-12 mt-5 mb-5">
-          <div className="lead">
-            {user.about}
-          </div>
+          <div className="lead">{user.about}</div>
         </div>
       </div>
     </div>
