@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./EditProfileForm.module.css";
-import { isAuth, signout } from "../../components/helpers/auth";
+import { isAuth, updateUser } from "../../components/helpers/auth";
 import axios from "axios";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
@@ -27,23 +27,24 @@ const EditProfileForm = ({ state, setState }) => {
   const isValid = () => {
     const { name, email, password } = state;
 
-       if (fileSize>100000) {
-         setState({ ...state, error: "File size should be less than 100kb" });
-         return false;
-       }
+    if (fileSize > 100000) {
+      setState({ ...state, error: "File size should be less than 100kb", loading:false });
+      return false;
+    }
     if (name.length == 0) {
-      setState({ ...state, error: "Name is required" });
+      setState({ ...state, error: "Name is required", loading:false });
       return false;
     }
     // Apply test to email
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      setState({ ...state, error: "A valid email is required" });
+      setState({ ...state, error: "A valid email is required", loading:false });
       return false;
     }
     if (password.length >= 1 && password.length <= 5) {
       setState({
         ...state,
         error: "Password must be at least 6 characters long",
+        loading:false
       });
       return false;
     }
@@ -91,18 +92,20 @@ const EditProfileForm = ({ state, setState }) => {
           },
         }
       );
-      console.log("User update response ====>", response);
-      setState({
-        ...state,
-        name: "",
-        email: "",
-        about: "",
-        password: "",
-        buttonText: "Updated",
-        success: response.data.message,
-        loading: false,
-        redirectToProfile: true,
-        imageUploadText: "Upload Image",
+    
+      updateUser(response.data, () => {
+        setState({
+          ...state,
+          name: "",
+          email: "",
+          about: "",
+          password: "",
+          buttonText: "Updated",
+          success: response.data.message,
+          loading: false,
+          redirectToProfile: true,
+          imageUploadText: "Upload Image",
+        });
       });
     } catch (error) {
       console.log(error);

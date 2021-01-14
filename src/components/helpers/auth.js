@@ -77,3 +77,26 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 export default PrivateRoute;
 
+// Function fro updating local storage after
+// user profile update
+
+// If user updates their profile name
+// the change is not reflected as isAuth()
+// only runs once after user sign in, hence the need
+// for the updateUser function
+export const updateUser= (user, next) => {
+  // console.log("user from updateUser =====>", user)
+  if(typeof window !=="undefined"){
+    if(localStorage.getItem("jwt")){
+      let auth = JSON.parse(localStorage.getItem("jwt"))
+
+      // user is response.data received from update axios call
+      // jwt(auth) is an object with a key of data
+      // which it self consists of two fields (token and user)
+      auth.data.user = user;
+
+      next()
+    }
+  }
+}
+
