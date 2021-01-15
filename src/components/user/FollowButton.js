@@ -1,11 +1,14 @@
 import React from "react";
 
-function FollowButton({ following, followButtonHandler }) {
+function FollowButton({ following, followButtonHandler, unFollowButtonHandler }) {
 
   return (
     <div className="d-inline-block mt-5">
       {!following ? (
-        <button className="btn border border-info text-info mr-3" onClick={() =>followButtonHandler()}>
+        <button
+          className="btn border border-info text-info mr-3"
+          onClick={() => followButtonHandler()}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -38,7 +41,9 @@ function FollowButton({ following, followButtonHandler }) {
             />
             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
           </svg>
-          <span className="ml-2">Unfollow</span>
+          <span className="ml-2" onClick={() => unFollowButtonHandler()}>
+            Unfollow
+          </span>
         </button>
       )}
     </div>

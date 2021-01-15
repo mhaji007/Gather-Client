@@ -130,7 +130,12 @@ function Profile({ match: { params } }) {
   // the pofile owner to the array of followings of
   // the currently logged-in user
   const getFollow = async (userId, token, followId) => {
-    console.log("userId, token and followId from getFollow ===>", userId, token, followId)
+    console.log(
+      "userId, token and followId from getFollow ===>",
+      userId,
+      token,
+      followId
+    );
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API}/user/follow`,
@@ -147,6 +152,37 @@ function Profile({ match: { params } }) {
       let following = checkFollow(response.data);
       // update the state with user and result of the check
       setState({ ...state, user: response.data, following: !following });
+      window.location.reload()
+    } catch (error) {
+      console.log("error from profile", error);
+      // User trying to access this
+      // resource is not authenticated
+      setState({ ...state, erro: error.respnose.data.error });
+    }
+  };
+  // Function responsible for making a request
+  // to unfollow endpoint to remove the currrenlty logged-in user
+  // from profile owner's followers as well as removing
+  // the pofile owner from the array of followings of
+  // the currently logged-in user
+  const getUnfollow = async (userId, token, unfollowId) => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API}/user/unfollow`,
+        { userId, unfollowId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Pass user whose profile we are currently on
+      // to check whether we(logged-in user) are
+      // in his followers
+      let following = checkFollow(response.data);
+      // update the state with user and result of the check
+      setState({ ...state, user: response.data, following: !following });
+      window.location.reload()
     } catch (error) {
       console.log("error from profile", error);
       // User trying to access this
@@ -160,6 +196,12 @@ function Profile({ match: { params } }) {
     const token = isAuth().data.token;
 
     getFollow(userId, token, user._id);
+  };
+  const unFollowButtonHandler = () => {
+    const userId = isAuth().data.user._id;
+    const token = isAuth().data.token;
+
+    getUnfollow(userId, token, user._id);
   };
 
   return redirectToSignin ? (
@@ -227,6 +269,7 @@ function Profile({ match: { params } }) {
             <FollowButton
               following={following}
               followButtonHandler={followButtonHandler}
+              unFollowButtonHandler={unFollowButtonHandler}
             />
           )}
         </div>

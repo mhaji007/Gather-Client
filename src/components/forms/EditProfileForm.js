@@ -27,10 +27,10 @@ const EditProfileForm = ({ state, setState }) => {
   const isValid = () => {
     const { name, email, password } = state;
 
-    if (fileSize > 100000) {
-      setState({ ...state, error: "File size should be less than 100kb", loading:false });
-      return false;
-    }
+    // if (fileSize > 100000) {
+    //   setState({ ...state, error: "File size should be less than 100kb", loading:false });
+    //   return false;
+    // }
     if (name.length == 0) {
       setState({ ...state, error: "Name is required", loading:false });
       return false;
@@ -92,7 +92,7 @@ const EditProfileForm = ({ state, setState }) => {
           },
         }
       );
-    
+
       updateUser(response.data, () => {
         setState({
           ...state,

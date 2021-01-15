@@ -44,7 +44,7 @@ function Users() {
               }?${new Date().getTime()}`}
               alt="Card image cap"
               onError={i => (i.target.src = "/avatar.png")}
-              style={{height:"300px"}}
+              style={{height:"420px"}}
             />
             <CardBody>
               <CardTitle tag="h5">{user.name}</CardTitle>
