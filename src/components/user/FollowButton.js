@@ -1,10 +1,11 @@
 import React from "react";
 
-function FollowButton({ following }) {
+function FollowButton({ following, followButtonHandler }) {
+
   return (
     <div className="d-inline-block mt-5">
       {!following ? (
-        <button className="btn border border-info text-info mr-3">
+        <button className="btn border border-info text-info mr-3" onClick={() =>followButtonHandler()}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

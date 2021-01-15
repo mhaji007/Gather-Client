@@ -23,7 +23,7 @@ import { Link, Redirect } from "react-router-dom";
 
 function Profile({ match: { params } }) {
   const [state, setState] = useState({
-    user: {following:[], followers:[]},
+    user: { following: [], followers: [] },
     redirectToSignin: "",
     following: false,
   });
@@ -124,6 +124,43 @@ function Profile({ match: { params } }) {
     });
     return match;
   };
+  // Function responsible for making a request
+  // to follow endpoint to add the currrenlty logged-in user
+  // to profile owner's followers as well as adding
+  // the pofile owner to the array of followings of
+  // the currently logged-in user
+  const getFollow = async (userId, token, followId) => {
+    console.log("userId, token and followId from getFollow ===>", userId, token, followId)
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API}/user/follow`,
+        { userId, followId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Pass user whose profile we are currently on
+      // to check whether we(logged-in user) are
+      // in his followers
+      let following = checkFollow(response.data);
+      // update the state with user and result of the check
+      setState({ ...state, user: response.data, following: !following });
+    } catch (error) {
+      console.log("error from profile", error);
+      // User trying to access this
+      // resource is not authenticated
+      setState({ ...state, erro: error.respnose.data.error });
+    }
+  };
+
+  const followButtonHandler = () => {
+    const userId = isAuth().data.user._id;
+    const token = isAuth().data.token;
+
+    getFollow(userId, token, user._id);
+  };
 
   return redirectToSignin ? (
     <Redirect to="/signin" />
@@ -187,7 +224,10 @@ function Profile({ match: { params } }) {
               </Link>
             </div>
           ) : (
-            <FollowButton following={following} />
+            <FollowButton
+              following={following}
+              followButtonHandler={followButtonHandler}
+            />
           )}
         </div>
       </div>
