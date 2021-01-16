@@ -66,7 +66,7 @@ function Profile({ match: { params } }) {
   // and on userId change
   useEffect(() => {
     getUser();
-  }, [params.userId]);
+  }, [params.userId, following]);
 
   const handleDelete = (userId) => async (e) => {
     if (window) {
@@ -146,13 +146,13 @@ function Profile({ match: { params } }) {
           },
         }
       );
-      // Pass user whose profile we are currently on
-      // to check whether we(logged-in user) are
-      // in his followers
-      let following = checkFollow(response.data);
+      // // Pass user whose profile we are currently on
+      // // to check whether we(logged-in user) are
+      // // in his followers
+      // let following = checkFollow(response.data);
       // update the state with user and result of the check
       setState({ ...state, user: response.data, following: !following });
-      window.location.reload()
+      // window.location.reload()
     } catch (error) {
       console.log("error from profile", error);
       // User trying to access this
@@ -176,13 +176,10 @@ function Profile({ match: { params } }) {
           },
         }
       );
-      // Pass user whose profile we are currently on
-      // to check whether we(logged-in user) are
-      // in his followers
-      let following = checkFollow(response.data);
+
       // update the state with user and result of the check
       setState({ ...state, user: response.data, following: !following });
-      window.location.reload()
+      // window.location.reload()
     } catch (error) {
       console.log("error from profile", error);
       // User trying to access this
