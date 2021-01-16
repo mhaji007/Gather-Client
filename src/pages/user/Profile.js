@@ -18,6 +18,7 @@ import {
 
 import { isAuth, signout } from "../../components/helpers/auth";
 import FollowButton from "../../components/user/FollowButton";
+import ProfileTabs from "../../components/user/ProfileTabs"
 import axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 
@@ -34,7 +35,7 @@ function Profile({ match: { params } }) {
     redirect: false,
   });
 
-  const { user, redirectToSignin, following } = state;
+  const { user, redirectToSignin, following, user:{followers}, user:{following:userfollowing} } = state;
   const { error, success, redirect } = deletestate;
 
   // Function for returning the details of
@@ -66,7 +67,7 @@ function Profile({ match: { params } }) {
   // and on userId change
   useEffect(() => {
     getUser();
-  }, [params.userId, following]);
+  }, [params.userId]);
 
   const handleDelete = (userId) => async (e) => {
     if (window) {
@@ -269,6 +270,9 @@ function Profile({ match: { params } }) {
               unFollowButtonHandler={unFollowButtonHandler}
             />
           )}
+          <hr/>
+          <ProfileTabs followers={followers} followings={userfollowing}/>
+
         </div>
       </div>
       <div className="row">
