@@ -270,14 +270,14 @@ function Profile({ match: { params } }) {
               unFollowButtonHandler={unFollowButtonHandler}
             />
           )}
-          <hr/>
-          <ProfileTabs followers={followers} followings={userfollowing}/>
 
         </div>
       </div>
       <div className="row">
         <div className="col-md-12 mt-5 mb-5">
           <div className="lead">{user.about}</div>
+          <hr/>
+          <ProfileTabs followers={followers} followings={userfollowing}/>
         </div>
       </div>
     </div>
