@@ -210,8 +210,8 @@ function Profile({ match: { params } }) {
     <div className="container">
       <h2 className="mt-5 mb-5">Profile</h2>
       <div className="row">
-        <div className="col-md-6">
-          <Card className="col-md-4">
+        <div className="col-md-4">
+          <Card className="col-md-6">
             <CardImg
               top
               width="100%"
@@ -249,7 +249,7 @@ function Profile({ match: { params } }) {
           {isAuth() &&
           isAuth().data.user &&
           isAuth().data.user._id === user._id ? (
-            <div className="d-inline-block">
+            <div className="d-inline-block mt-3">
               <Link
                 className="btn btn-sm btn-success mr-5"
                 to={`/user/edit/${user._id}`}
