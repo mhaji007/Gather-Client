@@ -158,7 +158,7 @@ function Profile({ match: { params } }) {
       console.log("error from profile", error);
       // User trying to access this
       // resource is not authenticated
-      setState({ ...state, erro: error.respnose.data.error });
+      setState({ ...state, error: error.respnose.data.error });
     }
   };
   // Function responsible for making a request
