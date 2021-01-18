@@ -35,19 +35,19 @@ function Posts() {
           const posterName = post.postedBy ? post.postedBy.name : "Unknown";
           return (
             <Card key={i} className="col-md-3 ml-2 mb-2">
-              {/* <CardImg
-              className="img-thumbnail"
+              <CardImg
+              className="img-thumbnail mb-3"
               top
               width="100%"
               // height="320vw"
               objectFit="cover"
-              src={`${process.env.REACT_APP_API}/user/photo/${
-                user._id
+              src={`${process.env.REACT_APP_API}/post/photo/${
+                post._id
               }?${new Date().getTime()}`}
-              alt="Card image cap"
+              alt={post.title}
               onError={(i) => (i.target.src = "/avatar.png")}
-              style={{ height: "420px" }}
-            /> */}
+              style={{ height: "300px" }}
+            />
               <CardBody>
                 <CardTitle tag="h5">{post.title}</CardTitle>
                 {/* <CardSubtitle tag="h6" className="mb-2 text-muted">
