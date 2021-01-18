@@ -71,7 +71,7 @@ function FollowSuggestion() {
       toFollow.splice(i,1)
 
 
-      setState({ ...state, users:toFollow, open:true, success:`Following ${followId.name}`});
+      setState({ ...state, users:toFollow, open:true, success:`You are not\w following ${followId.name}`});
       // window.location.reload()
     } catch (error) {
       console.log("error from profile", error);
@@ -91,7 +91,7 @@ function FollowSuggestion() {
 
   return (
     <div className="container">
-      <div>
+      <div className="my-5 ">
         {open &&success && showSuccessMessage(success)}
       </div>
       <div className="row">

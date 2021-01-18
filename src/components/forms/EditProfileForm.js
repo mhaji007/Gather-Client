@@ -22,6 +22,8 @@ const EditProfileForm = ({ state, setState }) => {
     id,
   } = state;
 
+      console.log("form data from client =======>", {...formData});
+
   // Client side validation of user input
   // for profile update.
   const isValid = () => {
@@ -122,7 +124,7 @@ const EditProfileForm = ({ state, setState }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setState({ ...state, loading: true });
-    console.log("form data from client =======>", ...formData);
+    console.log("form data from client =======>", {...formData});
     if (isValid()) {
       update();
     }
