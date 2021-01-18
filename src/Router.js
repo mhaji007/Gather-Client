@@ -9,6 +9,7 @@ import Users from "./pages/user/Users";
 import EditProfile from "./pages/user/EditProfile";
 import FollowSuggestion from "./pages/user/FollowSuggestion";
 import NewPost from "./pages/post/NewPost";
+import SinglePost from "./pages/post/SinglePost";
 import PrivateRoute from "./components/helpers/auth";
 
 const Router = () => {
@@ -17,6 +18,7 @@ const Router = () => {
       <Navbar/>
       <Switch>
         <Route exact path="/" component={Home}></Route>
+        <PrivateRoute exact path="/post/:postId" component={SinglePost}></PrivateRoute>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/signin" component={Signin}></Route>
         <PrivateRoute exact path="/user/:userId" component={Profile}></PrivateRoute>
