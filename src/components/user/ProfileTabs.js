@@ -116,7 +116,17 @@ function ProfileTabs({ followers, following, posts }) {
             );
           })} */}
 
-          {JSON.stringify(posts)}
+          {posts.map((post, i) => (
+            <div key={i}>
+              <div>
+                <Link to={`/post/${post._id}`}>
+                  <div>
+                    <p className="lead">{post.title}</p>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
