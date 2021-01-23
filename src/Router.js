@@ -18,14 +18,14 @@ const Router = () => {
       <Navbar/>
       <Switch>
         <Route exact path="/" component={Home}></Route>
-        <Route exact path="/signup" component={Signup}></Route>
-        <Route exact path="/signin" component={Signin}></Route>
-        <PrivateRoute exact path="/user/:userId" component={Profile}></PrivateRoute>
         <PrivateRoute exact path="/post/create" component={NewPost}></PrivateRoute>
         <PrivateRoute exact path="/post/:postId" component={SinglePost}></PrivateRoute>
+        <Route exact path="/users" component={Users}></Route>
+        <Route exact path="/signup" component={Signup}></Route>
+        <Route exact path="/signin" component={Signin}></Route>
         <PrivateRoute exact path="/user/edit/:userId" component={EditProfile}></PrivateRoute>
         <PrivateRoute exact path="/findpeople" component={FollowSuggestion}></PrivateRoute>
-        <Route exact path="/users" component={Users}></Route>
+        <PrivateRoute exact path="/user/:userId" component={Profile}></PrivateRoute>
       </Switch>
     </div>
   );

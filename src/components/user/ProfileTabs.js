@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ProfileTabs({ followings, followers }) {
+function ProfileTabs({ followers, following, posts }) {
   return (
     <div>
       <div className="row">
@@ -60,7 +60,7 @@ function ProfileTabs({ followings, followers }) {
             <span className="ml-3">Following</span>
           </h3>
           <hr />
-          {followings.map((person, i) => {
+          {following.map((person, i) => {
             return (
               <div key={i}>
                 <div className="row">
@@ -101,6 +101,22 @@ function ProfileTabs({ followings, followers }) {
             <span className="ml-3 mb-3">Posts</span>
           </h3>
           <hr />
+          {/* {posts.map((post, i) => {
+            return (
+              <div key={i}>
+                <div className="row">
+                  <div>
+                    <Link to={`/post/${post._id}`}>
+
+                      <div className="d-inline-block">{post.title}</div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })} */}
+
+          {JSON.stringify(posts)}
         </div>
       </div>
     </div>
