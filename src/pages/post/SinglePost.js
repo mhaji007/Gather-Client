@@ -10,6 +10,7 @@ import {
 import loader from "../../loader.gif";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { isAuth } from "../../components/helpers/auth";
 
 function SinglePost({ match: { params } }) {
   const [state, setState] = useState({
@@ -59,16 +60,29 @@ function SinglePost({ match: { params } }) {
               </CardSubtitle> */}
           <CardText>{post.body}</CardText>
           <br />
-          <Link
-            to={`/`}
-            className="btn btn-sm border border-dark rounded text-dark"
-          >
-            Back to Posts
-          </Link>
           <p className="font-italic mt-3">
             Posted by <Link to={`${posterId}`}>{posterName} </Link>
             on {new Date(post.created).toDateString()}
           </p>
+
+          <div className="d-inline-block">
+            <Link
+              to={`/`}
+              className="btn  border border-dark rounded text-dark mr-5"
+            >
+              Back to Posts
+            </Link>
+              {isAuth().data.user && isAuth().data.user._id === post.postedBy._id  &&
+              <>
+            <button className="btn  border border-info  text-info mr-5">
+              Update Post
+            </button>
+            <button className="btn  border border-danger  text-danger">
+              Delete Post
+            </button>
+            </>
+            }
+          </div>
         </CardBody>
       </Card>
     );
@@ -80,7 +94,6 @@ function SinglePost({ match: { params } }) {
       {!post ? (
         <div className="text-center">
           <img src={loader} style={{ width: "auto", height: "350px" }} />
-
         </div>
       ) : (
         renderPost(post)
