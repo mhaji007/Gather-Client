@@ -50,6 +50,15 @@ function SinglePost({ match: { params } }) {
     });
   };
 
+    const deleteConfirmed = () => {
+      let answer = window.confirm(
+        "Are you sure you want to delete this post?"
+      );
+      if (answer) {
+        deletePost()
+      }
+    };
+
   const renderPost = (post) => {
     const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "";
     const posterName = post.postedBy ? post.postedBy.name : "Unknown";
@@ -96,7 +105,7 @@ function SinglePost({ match: { params } }) {
                   </button>
                   <button
                     className="btn  border border-danger  text-danger"
-                    onClick={deletePost}
+                    onClick={deleteConfirmed}
                   >
                     Delete Post
                   </button>
