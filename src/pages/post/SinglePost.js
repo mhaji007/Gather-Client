@@ -100,9 +100,12 @@ function SinglePost({ match: { params } }) {
             {isAuth().data.user &&
               isAuth().data.user._id === post.postedBy._id && (
                 <>
-                  <button className="btn  border border-info  text-info mr-5">
-                    Update Post
-                  </button>
+                  <Link
+                    to={`/post/edit/${post._id}`}
+                    className="btn  border border-dark rounded text-dark mr-5"
+                  >
+                    Edit Post
+                  </Link>
                   <button
                     className="btn  border border-danger  text-danger"
                     onClick={deleteConfirmed}

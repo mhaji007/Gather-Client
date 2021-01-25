@@ -9,6 +9,7 @@ import Users from "./pages/user/Users";
 import EditProfile from "./pages/user/EditProfile";
 import FollowSuggestion from "./pages/user/FollowSuggestion";
 import NewPost from "./pages/post/NewPost";
+import EditPost from "./pages/post/EditPost";
 import SinglePost from "./pages/post/SinglePost";
 import PrivateRoute from "./components/helpers/auth";
 
@@ -20,6 +21,7 @@ const Router = () => {
         <Route exact path="/" component={Home}></Route>
         <PrivateRoute exact path="/post/create" component={NewPost}></PrivateRoute>
         <PrivateRoute exact path="/post/:postId" component={SinglePost}></PrivateRoute>
+        <PrivateRoute exact path="/post/edit/:postId" component={EditPost}></PrivateRoute>
         <Route exact path="/users" component={Users}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/signin" component={Signin}></Route>
