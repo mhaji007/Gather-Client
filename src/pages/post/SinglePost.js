@@ -7,17 +7,19 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
+import { remove } from "./apiPost";
 import loader from "../../loader.gif";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import { isAuth } from "../../components/helpers/auth";
 
 function SinglePost({ match: { params } }) {
   const [state, setState] = useState({
     post: "",
+    redirectToHome: false,
   });
 
-  const { post } = state;
+  const { post, redirectToHome } = state;
 
   useEffect(() => {
     getPost();
@@ -35,9 +37,23 @@ function SinglePost({ match: { params } }) {
     }
   };
 
+  const deletePost = () => {
+    const postId = params.postId;
+    const token = isAuth().data.token;
+
+    remove(postId, token).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setState({ redirectToHome: true });
+      }
+    });
+  };
+
   const renderPost = (post) => {
     const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "";
     const posterName = post.postedBy ? post.postedBy.name : "Unknown";
+
     return (
       <Card>
         <CardImg
@@ -72,34 +88,41 @@ function SinglePost({ match: { params } }) {
             >
               Back to Posts
             </Link>
-              {isAuth().data.user && isAuth().data.user._id === post.postedBy._id  &&
-              <>
-            <button className="btn  border border-info  text-info mr-5">
-              Update Post
-            </button>
-            <button className="btn  border border-danger  text-danger">
-              Delete Post
-            </button>
-            </>
-            }
+            {isAuth().data.user &&
+              isAuth().data.user._id === post.postedBy._id && (
+                <>
+                  <button className="btn  border border-info  text-info mr-5">
+                    Update Post
+                  </button>
+                  <button
+                    className="btn  border border-danger  text-danger"
+                    onClick={deletePost}
+                  >
+                    Delete Post
+                  </button>
+                </>
+              )}
           </div>
         </CardBody>
       </Card>
     );
   };
 
-  return (
-    <div className="container">
-      <h2 className="display-4 mt-5 mb-5">{post.title}</h2>
-      {!post ? (
-        <div className="text-center">
-          <img src={loader} style={{ width: "auto", height: "350px" }} />
-        </div>
-      ) : (
-        renderPost(post)
-      )}
-    </div>
-  );
+  if (redirectToHome) {
+    return <Redirect to={"/"} />;
+  } else
+    return (
+      <div className="container">
+        <h2 className="display-4 mt-5 mb-5">{post.title}</h2>
+        {!post ? (
+          <div className="text-center">
+            <img src={loader} style={{ width: "auto", height: "350px" }} />
+          </div>
+        ) : (
+          renderPost(post)
+        )}
+      </div>
+    );
 }
 
 export default SinglePost;
