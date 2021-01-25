@@ -18,23 +18,22 @@ import {
 import loader from "../../loader.gif";
 
 import { isAuth } from "../../components/helpers/auth";
-import axios from "axios"
+import axios from "axios";
 
-function EditPost({match:{params}}) {
-
-const [state, setState] = useState({
-  id: "",
-  title: "",
-  body: "",
-  success: "",
-  error: "",
-  loading: false,
-  postData: new FormData(),
-  redirectToProfile: false,
-});
-
+function EditPost({ match: { params } }) {
+  const [state, setState] = useState({
+    id: "",
+    title: "",
+    body: "",
+    success: "",
+    error: "",
+    loading: false,
+    postData: new FormData(),
+    redirectToProfile: false,
+  });
 
   const {
+    id,
     title,
     body,
     photo,
@@ -46,12 +45,9 @@ const [state, setState] = useState({
     redirectToProfile,
   } = state;
 
-
-useEffect(() => {
-
-getPost(params.postId)
-}, [params.postId])
-
+  useEffect(() => {
+    getPost(params.postId);
+  }, [params.postId]);
 
   const getPost = async (postId) => {
     try {
@@ -68,16 +64,19 @@ getPost(params.postId)
         id: response.data._id,
         title: response.data.title,
         body: response.data.body,
-       error:""
+        error: "",
       });
     } catch (error) {
       console.log("error from profile", error);
       // User trying to access this
       // resource is not authenticated
-      setState({ error:error.response.data.error, redirectToProfile: true });
+      setState({ error: error.response.data.error, redirectToProfile: true });
     }
   };
 
+  const photoUrl = id
+    ? `${process.env.REACT_APP_API}/post/photo/${id}?${new Date().getTime()}`
+    : "/avatar.png";
 
   return redirectToProfile ? (
     <Redirect to={`/user/${isAuth().data.user._id}`} />
@@ -92,27 +91,27 @@ getPost(params.postId)
         )}
       </div>
       <div className="text-center ">
-        {/*To display the image we need to provide src to img tag
+        {/* To display the image we need to provide src to img tag
         so there is no need fetch from backend.
         If we do want to fetch photo from server
         we have to modify how data is returned from server,
         currently we are returning image type in headers.
         if we use fetch, we have to return image data as json response
-        and then use that in react to display the image.
-         */}
-        {/* <img
-          src={photoUrl}
+        and then use that in react to display the image. */}
 
+        <img
+          src={photoUrl}
           style={{ width: "auto", height: "150px" }}
           // if src is not found that is error.
           // so if there is error use default image
           onError={(i) => (i.target.src = "/avatar.png")}
           className="img-thumbnail "
-        /> */}
+          alt={title}
+        />
       </div>
       <EditPostForm state={state} setState={setState} />
     </div>
   );
 }
 
-export default EditPost
+export default EditPost;
