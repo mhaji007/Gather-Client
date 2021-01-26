@@ -17,11 +17,12 @@ function SinglePost({ match: { params } }) {
   const [state, setState] = useState({
     post: "",
     redirectToHome: false,
+    redirectToSignIn: false,
     like: false,
     likes: 0,
   });
 
-  const { post, redirectToHome, like, likes } = state;
+  const { post, redirectToHome, redirectToSignIn, like, likes } = state;
 
   console.log("likes from state on load ===>", likes);
 
@@ -35,7 +36,8 @@ function SinglePost({ match: { params } }) {
   // and increase the likes from 1 to 2 and only after liking
   // the post again the count reverts back to 0
   const checkLike = (likes) => {
-    const userId = isAuth().data.user._id;
+    const userId = isAuth()
+    && isAuth().data.user._id;
     let match = likes.toString().indexOf(userId) !== -1;
     return match;
   };
@@ -114,6 +116,11 @@ function SinglePost({ match: { params } }) {
   };
 
   const likeToggle = () => {
+    if(!isAuth()) {
+      setState({redirectToSignIn:true})
+      // Prevent rest of the code from executing
+      return false;
+    }
     let callApi = like ? unLikeHandler : likeHandler;
     const userId = isAuth().data.user._id;
     const postId = post._id;
@@ -196,7 +203,10 @@ function SinglePost({ match: { params } }) {
 
   if (redirectToHome) {
     return <Redirect to={"/"} />;
-  } else
+  } else if (redirectToSignIn) {
+    return <Redirect to={"/signin"} />;
+  }
+  else
     return (
       <div className="container">
         <h2 className=" mt-5 mb-5">{post.title}</h2>
