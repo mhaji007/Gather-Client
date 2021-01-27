@@ -12,6 +12,7 @@ import loader from "../../loader.gif";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import { isAuth } from "../../components/helpers/auth";
+import Comment from "./Comment"
 
 function SinglePost({ match: { params } }) {
   const [state, setState] = useState({
@@ -20,15 +21,21 @@ function SinglePost({ match: { params } }) {
     redirectToSignIn: false,
     like: false,
     likes: 0,
+    comments:[]
   });
 
-  const { post, redirectToHome, redirectToSignIn, like, likes } = state;
+  const { post, redirectToHome, redirectToSignIn, like, likes, comments } = state;
 
   console.log("likes from state on load ===>", likes);
 
   useEffect(() => {
     getPost();
   }, []);
+
+    const updateComments = (comments) => {
+      setState({...state, comments})
+    };
+
 
   // Function to check whether usre has already liked the post
   // or not. Without this check in place the like count
@@ -81,38 +88,7 @@ function SinglePost({ match: { params } }) {
   };
 
 
-    const comment = async (postId, userId, comment) => {
-      try {
-        const response = await axios.put(
-          `${process.env.REACT_APP_API}/post/comment`,
-          { postId, userId, comment },
-          {
-            headers: {
-              Authorization: `Bearer ${isAuth().data.token}`,
-            },
-          }
-        );
-        setState({ ...state, like: !like, likes: response.data.likes.length });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const uncomment = async (postId, userId, comment) => {
-      try {
-        const response = await axios.put(
-          `${process.env.REACT_APP_API}/post/uncomment`,
-          { postId, userId, comment },
-          {
-            headers: {
-              Authorization: `Bearer ${isAuth().data.token}`,
-            },
-          }
-        );
-        setState({ ...state, like: !like, likes: response.data.likes.length });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+
 
   const likeHandler = async (postId, userId) => {
     try {
@@ -251,6 +227,7 @@ function SinglePost({ match: { params } }) {
         ) : (
           renderPost(post)
         )}
+    <Comment postId={post._id} comments={comments} updateComments={updateComments}/>
       </div>
     );
 }
