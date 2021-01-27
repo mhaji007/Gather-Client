@@ -80,6 +80,40 @@ function SinglePost({ match: { params } }) {
     }
   };
 
+
+    const comment = async (postId, userId, comment) => {
+      try {
+        const response = await axios.put(
+          `${process.env.REACT_APP_API}/post/comment`,
+          { postId, userId, comment },
+          {
+            headers: {
+              Authorization: `Bearer ${isAuth().data.token}`,
+            },
+          }
+        );
+        setState({ ...state, like: !like, likes: response.data.likes.length });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const uncomment = async (postId, userId, comment) => {
+      try {
+        const response = await axios.put(
+          `${process.env.REACT_APP_API}/post/uncomment`,
+          { postId, userId, comment },
+          {
+            headers: {
+              Authorization: `Bearer ${isAuth().data.token}`,
+            },
+          }
+        );
+        setState({ ...state, like: !like, likes: response.data.likes.length });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
   const likeHandler = async (postId, userId) => {
     try {
       const response = await axios.put(
