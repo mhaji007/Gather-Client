@@ -227,7 +227,7 @@ function SinglePost({ match: { params } }) {
         ) : (
           renderPost(post)
         )}
-    <Comment postId={post._id} comments={comments} updateComments={updateComments}/>
+    <Comment postId={post._id} comments={comments} updateComments={updateComments} getPost={getPost}/>
       </div>
     );
 }
