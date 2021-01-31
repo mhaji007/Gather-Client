@@ -59,6 +59,7 @@ function SinglePost({ match: { params } }) {
         ...state,
         likes: response.data.likes.length,
         post: response.data,
+        comments:response.data.comments
       }));
 
       setState((state) => ({ ...state, like: checkLike(response.data.likes) }));
@@ -227,7 +228,17 @@ function SinglePost({ match: { params } }) {
         ) : (
           renderPost(post)
         )}
-    <Comment postId={post._id} comments={comments} updateComments={updateComments} getPost={getPost}/>
+        {/* <Comment
+          postId={post._id}
+          comments={comments}
+          updateComments={updateComments}
+          getPost={getPost}
+        /> */}
+        <Comment
+          postId={post._id}
+          comments={comments.reverse()}
+          updateComments={updateComments}
+        />
       </div>
     );
 }
