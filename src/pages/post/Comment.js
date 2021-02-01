@@ -38,7 +38,7 @@ class Comment extends Component {
     const { text } = this.state;
     if (!text.length > 0 || text.length > 150) {
       this.setState({
-        error: "Comment should not be empty and less than 150 characters long",
+        error: "Comment cannot be empty and should be less than 150 characters long",
       });
       return false;
     }
@@ -150,12 +150,12 @@ class Comment extends Component {
                     </Link>
                     on {new Date(comment.created).toDateString()}
                     <span>
-                      {isAuth().user &&
-                        isAuth().user._id === comment.postedBy._id && (
+                      {isAuth().data.user &&
+                        isAuth().data.user._id === comment.postedBy._id && (
                           <>
                             <span
                               onClick={() => this.deleteConfirmed(comment)}
-                              className="text-danger float-right mr-1"
+                              className=" border border-danger text-danger float-right mr-1"
                             >
                               Remove
                             </span>
