@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import SigninForm from "../../components/forms/SigninForm";
 import {
   showSuccessMessage,
@@ -34,10 +34,12 @@ function SignIn() {
       {success && showSuccessMessage(success)}
       {error && showErrorMessage(error)}
       <div className="text-center">
-
-      {loading &&<img src={loader} style={{width:"auto", height:"250px"}}/>}
+        {loading && (
+          <img src={loader} style={{ width: "auto", height: "250px" }} />
+        )}
       </div>
       <SigninForm state={state} setState={setState} />
+
     </div>
   );
 }

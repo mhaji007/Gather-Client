@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Signup from "./pages/user/Signup";
 import Signin from "./pages/user/Signin";
 import Profile from "./pages/user/Profile";
+import ForgotPassword from "./pages/user/ForgotPassword";
 import Navbar from "./components/Navbar";
 import Users from "./pages/user/Users";
 import EditProfile from "./pages/user/EditProfile";
@@ -16,18 +17,43 @@ import PrivateRoute from "./components/helpers/auth";
 const Router = () => {
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={Home}></Route>
-        <PrivateRoute exact path="/post/create" component={NewPost}></PrivateRoute>
-        <PrivateRoute exact path="/post/:postId" component={SinglePost}></PrivateRoute>
-        <PrivateRoute exact path="/post/edit/:postId" component={EditPost}></PrivateRoute>
+        <Route exact path="/forgot-password" component={ForgotPassword}></Route>
+        <PrivateRoute
+          exact
+          path="/post/create"
+          component={NewPost}
+        ></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/post/:postId"
+          component={SinglePost}
+        ></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/post/edit/:postId"
+          component={EditPost}
+        ></PrivateRoute>
         <Route exact path="/users" component={Users}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/signin" component={Signin}></Route>
-        <PrivateRoute exact path="/user/edit/:userId" component={EditProfile}></PrivateRoute>
-        <PrivateRoute exact path="/findpeople" component={FollowSuggestion}></PrivateRoute>
-        <PrivateRoute exact path="/user/:userId" component={Profile}></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/user/edit/:userId"
+          component={EditProfile}
+        ></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/findpeople"
+          component={FollowSuggestion}
+        ></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/user/:userId"
+          component={Profile}
+        ></PrivateRoute>
       </Switch>
     </div>
   );

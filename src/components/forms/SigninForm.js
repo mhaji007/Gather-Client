@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./SigninForm.module.css";
 import axios from "axios";
 import {authenticate} from "../helpers/auth";
+import {Link} from "react-router-dom"
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 // import { GoogleLoginButton } from "react-social-login-buttons";
 
@@ -78,7 +79,12 @@ const SigninForm = ({ state, setState }) => {
             onChange={handleChange("password")}
           />
         </FormGroup>
-        <Button className="btn-lg btn-dark btn-block mt-3">{buttonText}</Button>
+        <Button className="btn-lg btn-dark btn-block mt-3 mb-3">{buttonText}</Button>
+        <p className="float-right">
+          <Link to="/forgot-password" className="text-danger">
+            Forgot Password
+          </Link>
+        </p>
       </Form>
     </>
   );
