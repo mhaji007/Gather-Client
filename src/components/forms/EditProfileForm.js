@@ -90,7 +90,7 @@ const EditProfileForm = ({ state, setState }) => {
 
         {
           headers: {
-            Authorization: `Bearer ${isAuth().data.token}`,
+            Authorization: `Bearer ${isAuth().token}`,
           },
         }
       );

@@ -55,7 +55,7 @@ function EditPost({ match: { params } }) {
         `${process.env.REACT_APP_API}/post/${postId}`,
         {
           headers: {
-            Authorization: `Bearer ${isAuth().data.token}`,
+            Authorization: `Bearer ${isAuth().token}`,
           },
         }
       );
@@ -79,7 +79,7 @@ function EditPost({ match: { params } }) {
     : "/avatar.png";
 
   return redirectToProfile ? (
-    <Redirect to={`/user/${isAuth().data.user._id}`} />
+    <Redirect to={`/user/${isAuth().user._id}`} />
   ) : (
     <div className="container">
       <h2 className="mt-5 mb-5 text-center">Edit post</h2>

@@ -44,7 +44,7 @@ function SinglePost({ match: { params } }) {
   // the post again the count reverts back to 0
   const checkLike = (likes) => {
     const userId = isAuth()
-    && isAuth().data.user._id;
+    && isAuth().user._id;
     let match = likes.toString().indexOf(userId) !== -1;
     return match;
   };
@@ -70,7 +70,7 @@ function SinglePost({ match: { params } }) {
 
   const deletePost = () => {
     const postId = params.postId;
-    const token = isAuth().data.token;
+    const token = isAuth().token;
 
     remove(postId, token).then((data) => {
       if (data.error) {
@@ -98,7 +98,7 @@ function SinglePost({ match: { params } }) {
         { postId, userId },
         {
           headers: {
-            Authorization: `Bearer ${isAuth().data.token}`,
+            Authorization: `Bearer ${isAuth().token}`,
           },
         }
       );
@@ -115,7 +115,7 @@ function SinglePost({ match: { params } }) {
         { postId, userId },
         {
           headers: {
-            Authorization: `Bearer ${isAuth().data.token}`,
+            Authorization: `Bearer ${isAuth().token}`,
           },
         }
       );
@@ -133,7 +133,7 @@ function SinglePost({ match: { params } }) {
       return false;
     }
     let callApi = like ? unLikeHandler : likeHandler;
-    const userId = isAuth().data.user._id;
+    const userId = isAuth().user._id;
     const postId = post._id;
     callApi(postId, userId);
   };
@@ -189,8 +189,8 @@ function SinglePost({ match: { params } }) {
             >
               Back to Posts
             </Link>
-            {isAuth().data.user &&
-              isAuth().data.user._id === post.postedBy._id && (
+            {isAuth().user &&
+              isAuth().user._id === post.postedBy._id && (
                 <>
                   <Link
                     to={`/post/edit/${post._id}`}

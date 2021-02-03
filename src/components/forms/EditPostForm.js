@@ -69,7 +69,7 @@ const EditPostForm = ({ state, setState }) => {
 
   const update = async () => {
     const postId = id;
-    const token = isAuth().data.token;
+    const token = isAuth().token;
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API}/post/${postId}`,

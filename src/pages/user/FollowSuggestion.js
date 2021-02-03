@@ -42,8 +42,8 @@ function FollowSuggestion() {
   };
 
   useEffect(() => {
-    const userId = isAuth().data.user._id;
-    const token = isAuth().data.token;
+    const userId = isAuth().user._id;
+    const token = isAuth().token;
     listUsers(userId, token);
   }, []);
 
@@ -82,8 +82,8 @@ function FollowSuggestion() {
   };
 
   const handleFollow = (followId, i) => {
-        const userId = isAuth().data.user._id;
-        const token = isAuth().data.token;
+        const userId = isAuth().user._id;
+        const token = isAuth().token;
         getFollow (userId, token, followId, i);
 
 

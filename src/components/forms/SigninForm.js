@@ -4,6 +4,7 @@ import axios from "axios";
 import {authenticate} from "../helpers/auth";
 import {Link} from "react-router-dom"
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import SocialLogin from "../../pages/user/SocialLogin";
 // import { GoogleLoginButton } from "react-social-login-buttons";
 
 const SigninForm = ({ state, setState }) => {
@@ -28,7 +29,7 @@ const SigninForm = ({ state, setState }) => {
         email,
         password,
       });
-      authenticate(response, () => {
+      authenticate(response.data, () => {
         setState({
           ...state,
           email: "",
@@ -79,11 +80,17 @@ const SigninForm = ({ state, setState }) => {
             onChange={handleChange("password")}
           />
         </FormGroup>
-        <Button className="btn-lg btn-dark btn-block mt-3 mb-3">{buttonText}</Button>
-        <p className="float-right">
+        <Button className="btn-lg btn-dark btn-block mt-3 mb-3">
+          {buttonText}
+        </Button>
+        <p className="float-right my-2">
           <Link to="/forgot-password" className="text-danger">
             Forgot Password
           </Link>
+        </p>
+        <p className="float-left">
+
+        <SocialLogin />
         </p>
       </Form>
     </>

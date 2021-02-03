@@ -54,8 +54,8 @@ class Comment extends Component {
     }
 
     if (this.isValid()) {
-      const userId = isAuth().data.user._id;
-      const token = isAuth().data.token;
+      const userId = isAuth().user._id;
+      const token = isAuth().token;
       const postId = this.props.postId;
 
       comment(userId, token, postId, { text: this.state.text }).then((data) => {
@@ -71,8 +71,8 @@ class Comment extends Component {
   };
 
   deleteComment = (comment) => {
-    const userId = isAuth().data.user._id;
-    const token = isAuth().data.token;
+    const userId = isAuth().user._id;
+    const token = isAuth().token;
     const postId = this.props.postId;
 
     uncomment(userId, token, postId, comment).then((data) => {
@@ -150,8 +150,8 @@ class Comment extends Component {
                     </Link>
                     on {new Date(comment.created).toDateString()}
                     <span>
-                      {isAuth().data.user &&
-                        isAuth().data.user._id === comment.postedBy._id && (
+                      {isAuth().user &&
+                        isAuth().user._id === comment.postedBy._id && (
                           <>
                             <span
                               onClick={() => this.deleteConfirmed(comment)}

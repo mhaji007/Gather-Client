@@ -53,7 +53,7 @@ function NewPost() {
   //   : "/avatar.png";
 
   return redirectToProfile ? (
-    <Redirect to={`/user/${isAuth().data.user._id}`} />
+    <Redirect to={`/user/${isAuth().user._id}`} />
   ) : (
     <div className="container">
       <h2 className="mt-5 mb-5 text-center">Create a new post</h2>

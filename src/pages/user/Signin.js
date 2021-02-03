@@ -7,6 +7,8 @@ import {
   showErrorMessage,
 } from "../../components/helpers/alerts";
 import loader from "../../loader.gif"
+
+
 function SignIn() {
   const [state, setState] = useState({
     email: "",
@@ -31,6 +33,7 @@ function SignIn() {
       <h2 className="mt-5 mb-1 text-center">
         <img src="./gather.png" />
       </h2>
+
       {success && showSuccessMessage(success)}
       {error && showErrorMessage(error)}
       <div className="text-center">

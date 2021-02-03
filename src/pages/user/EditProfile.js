@@ -56,7 +56,7 @@ function EditProfile({ match: { params } }) {
         `${process.env.REACT_APP_API}/user/${params.userId}`,
         {
           headers: {
-            Authorization: `Bearer ${isAuth().data.token}`,
+            Authorization: `Bearer ${isAuth().token}`,
           },
         }
       );

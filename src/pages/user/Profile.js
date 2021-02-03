@@ -404,14 +404,14 @@ class Profile extends Component {
     const jwt = isAuth();
     const match = user.followers.find((follower) => {
       // one id has many other ids (followers) and vice versa
-      return follower._id === jwt.data.user._id;
+      return follower._id === jwt.user._id;
     });
     return match;
   };
 
   clickFollowButton = (callApi) => {
-    const userId = isAuth().data.user._id;
-    const token = isAuth().data.token;
+    const userId = isAuth().user._id;
+    const token = isAuth().token;
 
     callApi(userId, token, this.state.user._id).then((data) => {
       if (data.error) {
@@ -423,7 +423,7 @@ class Profile extends Component {
   };
 
   init = (userId) => {
-    const token = isAuth().data.token;
+    const token = isAuth().token;
     read(userId, token).then((data) => {
       if (data.error) {
         console.log(data.error)
@@ -440,7 +440,7 @@ class Profile extends Component {
   };
 
   loadPosts = (userId) => {
-    const token = isAuth().data.token;
+    const token = isAuth().token;
     listByUser(userId, token).then((data) => {
       console.log("userId from listByUser ===>", userId)
       if (data.error) {
@@ -498,7 +498,7 @@ class Profile extends Component {
               <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
             </div>
 
-            {isAuth().data.user && isAuth().data.user._id === user._id ? (
+            {isAuth().user && isAuth().user._id === user._id ? (
               <div className="d-inline-block">
                 <Link
                   className="btn btn-raised btn-info mr-5"
@@ -523,7 +523,7 @@ class Profile extends Component {
             )}
 
             <div>
-              {isAuth().data.user && isAuth().data.user.role === "admin" && (
+              {isAuth().user && isAuth().user.role === "admin" && (
                 <div class="card mt-5">
                   <div className="card-body">
                     <h5 className="card-title">Admin</h5>

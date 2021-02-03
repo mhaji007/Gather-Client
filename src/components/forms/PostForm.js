@@ -67,8 +67,8 @@ const PostForm = ({ state, setState }) => {
   // Function reponsible for making request to post endpoint
 
   const post = async () => {
-    const userId = isAuth().data.user._id;
-    const token = isAuth().data.token;
+    const userId = isAuth().user._id;
+    const token = isAuth().token;
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API}/post/new/${userId}`,
