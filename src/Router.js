@@ -5,6 +5,7 @@ import Signup from "./pages/user/Signup";
 import Signin from "./pages/user/Signin";
 import Profile from "./pages/user/Profile";
 import ForgotPassword from "./pages/user/ForgotPassword";
+import ResetPassword from "./pages/user/ResetPassword";
 import Navbar from "./components/Navbar";
 import Users from "./pages/user/Users";
 import EditProfile from "./pages/user/EditProfile";
@@ -21,6 +22,11 @@ const Router = () => {
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/forgot-password" component={ForgotPassword}></Route>
+        <Route
+          exact
+          path="/reset-password/:resetPasswordToken"
+          component={ResetPassword}
+        />
         <PrivateRoute
           exact
           path="/post/create"
