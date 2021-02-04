@@ -43,7 +43,7 @@ function ForgotPasswordForm({ state, setState }) {
             }
             autoFocus
           />
-          {JSON.stringify(email)}
+
         </FormGroup>
         <Button className="btn-lg btn-dark btn-block mt-3">
           Send Password Reset Link

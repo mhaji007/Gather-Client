@@ -40,7 +40,6 @@ function ResetPasswordForm({ state, setState, params }) {
             }
             autoFocus
           />
-          {JSON.stringify(newPassword)}
         </FormGroup>
         <Button className="btn-lg btn-dark btn-block mt-3">
          Reset Password
